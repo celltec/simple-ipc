@@ -16,11 +16,11 @@ or
 ```
 Worker(command, callback=None)
 ```
-- ```command``` a path to an executable (+ arguments)
-May be a **list** of seperate arguments that *can include spaces* 
+- ```command``` a path to an executable [arguments]  
+May be a **list** of seperate arguments that *can include spaces*  
 or of type **str** that is split internally with *no support for spaces*.
 
-- ```callback``` [optional] a function that is called after new data has been received
+- ```callback``` [optional] a function that is called after new data has been received  
 The data will be passed to the callback function, so it must have exactly one argument.
 
 #### Example
@@ -43,7 +43,7 @@ The worker starts automatically when created.
 
 #### Properties
 - `running` indicates the status of the worker *(read-only)*
-- `data` holds the data from the external program *(read-only)*
+- `data` holds the data from the external program *(read-only)*  
 Note that any data will be converted to type `str` internally.
 
 #### Example
