@@ -1,0 +1,28 @@
+import os
+from io import open
+from setuptools import setup, find_packages
+
+with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'readme.md')) as fd:
+    long_description = fd.read()
+
+setup(
+    name='simple-ipc',
+    version='1.0.0',
+    description='Inter-process communication interface based on stdio piping',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/celltec/simple-ipc',
+    project_urls={'Source': 'https://github.com/celltec/simple-ipc/tree/master/src/ipc/worker.py'},
+    author='Jeremy Peters',
+    author_email='info.peters@quantentunnel.de',
+    license='MIT License',
+    keywords='stdio send process program communicate interact transmit transfer communication interaction transmission simple',
+    package_dir={'': 'src'},
+    packages=find_packages(where='src'),
+    python_requires='>=2.7, <4',
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+    ],
+)
