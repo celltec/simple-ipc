@@ -1,17 +1,27 @@
 # simple-ipc
 
-A simple python interface for inter-process communication, a way to asynchronously exchange data with external programs at runtime. The internal mechanism functions by writing data to *stdout* and reading from *stdin* using multi threading. 
+#### Inter-process communication based on stdio
+
+![Python Version](https://img.shields.io/pypi/pyversions/simple-ipc)
+![PyPI Version](https://img.shields.io/pypi/v/simple-ipc)
+![License](https://img.shields.io/github/license/celltec/simple-ipc)
+
+A simple python interface for inter-process communication, a way to asynchronously 
+exchange data with external programs at runtime. The internal mechanism functions 
+by writing data to *stdout* and reading from *stdin* using multi threading. 
 
 ## Installation
-- `pip install simple-ipc`
-
-In the python code:
-- `import ipc` or
-- `from ipc import Worker`
+`pip install simple-ipc`
 
 ## Usage
 
-### The constructor
+### Importing
+- `import ipc`  
+or
+- `from ipc import Worker`
+
+
+### The worker constructor
 ```
 Worker(command, callback=None)
 ```
@@ -19,7 +29,7 @@ Worker(command, callback=None)
 May be a **list** of seperate arguments that *can include spaces*  
 or of type **str** that is split internally with *no support for spaces*.
 
-- ```callback``` [optional] a function that is called after new data has been received  
+- ```callback``` (optional) a function that is called after new data has been received  
 The data will be passed to the callback function, so it must have exactly one argument.
 
 #### Example
@@ -27,8 +37,8 @@ The data will be passed to the callback function, so it must have exactly one ar
 def new_data(data):
     print(data)
 
-worker1 = Worker("/path/to/program.exe arg1 arg2", new_data)
-worker2 = Worker(["with space.exe", "arg1", "spaced arg2"])
+worker1 = Worker('program.exe arg1 arg2', new_data)
+worker2 = Worker(['with space.exe', 'spaced arg'])
 ```
 
 ### A worker object
@@ -52,43 +62,19 @@ while worker.running:
     print(worker.data)
 ```
 
-## Example program
-
-#### Setup
-As part of the example a "program.c" file is included which can be compiled with ```gcc program.c -o program```, though a compiled executable for windows and linux is included. On linux one extra step is required to execute this example. You have to give "program" the right to be executed with `chmod +x program`. Of course you also have to change the command in the "example.py" to `'./program'`.  
-
-#### Explanation
-"program" reads numbers from *stdin* and sends modified values back via *stdout*. As it only accepts numbers, it will not respond to data that contains letters or other symbols. A ```'\n'``` (newline) at the end of the data is needed to function properly. The numbers are exemplary reduced to a range of 1 to 42 and the program will close when the input is 42.
-
-#### Example code
+### Example program
 ```python
-import ipc
+from random import randint
+from ipc import Worker
 
 def new_data(data):
-    print('Received: {}'.format(data))
+    print(f'Received: {data}')
 
-cmd = 'program.exe'
-worker = ipc.Worker(cmd, new_data)
-while True:
-    number = 0
-    while worker.running:
-        print('Sending: {}'.format(number))
-        worker.send(number)
-        print('Data: {}'.format(worker.data))
-        number += 21
-    worker.run()
-```
+worker = Worker('program.exe', new_data)
 
-#### Output
-```
-Started worker
-Sending: 0
-Received: 1
-Data in main: 1
-Sending: 21
-Received: 22
-Data in main: 22
-Sending: 42
-Stopped worker [exit code: 0]
-Data in main: None
+while worker.running:
+    number = randint(1, 10)
+    print(f'Sending: {number}')
+    worker.send(number)
+    print(f'Data: {worker.data}')
 ```
