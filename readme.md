@@ -2,15 +2,14 @@
 
 A simple python interface for inter-process communication, a way to asynchronously exchange data with external programs at runtime. The internal mechanism functions by writing data to *stdout* and reading from *stdin* using multi threading. 
 
-## Usage
-
-### Installing
+## Installation
 - `pip install simple-ipc`
 
 In the python code:
-- `import ipc`
-or
+- `import ipc` or
 - `from ipc import Worker`
+
+## Usage
 
 ### The constructor
 ```
