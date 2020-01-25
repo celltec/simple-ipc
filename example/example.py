@@ -50,17 +50,5 @@ def main():
         time.sleep(2)                              # delay to see that the program has ended
         worker.run()                               # launch the external program again
 
-
-from random import randint
-
 if __name__ == '__main__':
-    #main()
-    worker = ipc.Worker('program.exe', new_data)
-    while True:
-
-
-        while worker.running:
-            number = randint(1, 10)
-            print(f'Sending: {number}')
-            worker.send(number)
-            print(f'Data: {worker.data}')
+    main()
