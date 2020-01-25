@@ -12,7 +12,7 @@ else:
 
 setup(
     name='simple-ipc',
-    version='1.0.3',
+    version='1.0.4',
     description='Inter-process communication interface based on stdio piping',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -20,7 +20,7 @@ setup(
     project_urls={'Source': 'https://github.com/celltec/simple-ipc/tree/master/src/ipc/worker.py'},
     author='Jeremy Peters',
     author_email='info.peters@quantentunnel.de',
-    keywords='stdio send process program communicate interact transmit transfer communication interaction transmission simple',
+    keywords='ipc stdio stdin stdout send process program communicate interact transmit transfer communication interaction transmission simple',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
     python_requires='>=2.7, <4',
