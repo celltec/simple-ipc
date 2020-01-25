@@ -14,55 +14,53 @@ by writing data to *stdout* and reading from *stdin* using multi threading.
 `pip install simple-ipc`
 
 ## Usage
-
-### Importing
-- `import ipc`  
-or
+Import the module first:
+- `import ipc`
 - `from ipc import Worker`
 
-
-### The worker constructor
+### The constructor
 ```
-Worker(command, callback=None)
+Worker(command, callback=None, start=True)
 ```
-- ```command``` a path to an executable [arguments]  
-May be a **list** of seperate arguments that *can include spaces*  
-or of type **str** that is split internally with *no support for spaces*.
 
-- ```callback``` (optional) a function that is called after new data has been received  
-The data will be passed to the callback function, so it must have exactly one argument.
+- `command` a path to an executable along with optional arguments  
+  - **list:** may include spaces 
+  - **str:** no support for spaces
 
-#### Example
+- `callback` *(optional)* a function that is called after new data has been received  
+  - must have exactly one argument
+
+- `start` *(optional)* determines if the worker should start when the object is created
+
+#### Examples
 ```python
-def new_data(data):
-    print(data)
+worker = Worker(['with space.exe', 'spaced arg'], start=False)
+```
 
-worker1 = Worker('program.exe arg1 arg2', new_data)
-worker2 = Worker(['with space.exe', 'spaced arg'])
+```python
+with Worker('program.exe') as worker:
+    ...
+```
+
+```python
+Worker('path/to/program.exe arg', lambda data: print(data))
 ```
 
 ### A worker object
-
-The worker starts automatically when created.
+By default the worker starts automatically when created.
 
 #### Methods
-- `run()` starts the worker
+- `start()` starts the worker
 - `send(data)` sends the data to the external process
-- `shutdown()` initiates the termination of all threads and clears all data
+- `stop()` initiates the termination of all threads and clears all data
 
 #### Properties
 - `running` indicates the status of the worker *(read-only)*
-- `data` holds the data from the external program *(read-only)*  
-Note that any data will be converted to type `str` internally.
+- `data` contains the most recent value *(read-only)*
 
-#### Example
-```python
-while worker.running:
-    worker.send(123)
-    print(worker.data)
-```
+All data will be converted to type `str` internally.
 
-### Example program
+## Example program
 ```python
 from random import randint
 from ipc import Worker

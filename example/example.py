@@ -1,10 +1,10 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                                                           #
 #   Setup:                                                                                  #
-#   As part of the example a "program.c" file is included which can be compiled             #
+#   As part of the example a 'program.c' file is included which can be compiled             #
 #   with "gcc program.c -o program", though a compiled executable for windows and           #
 #   linux is included. On linux one extra step is required to execute this example.         #
-#   You have to change the permissions of "program" with "chmod +x program".                #
+#   You have to change the permissions of 'program' with "chmod +x program".                #
 #                                                                                           #
 #   Explanation:                                                                            #
 #   The included program reads numbers from stdin and sends modified values back via        #
@@ -19,20 +19,16 @@ import os
 import time
 import ipc
 
-# callback function
+# callback function: print the data immediately after receiving
 def new_data(data):
-    # print the data immediately after receiving
     print('Received: {}'.format(data))
 
 def main():
-    # name of the included example program
     program = 'program'
-
-    # add file extention on windows
     if os.name == 'nt':
-        program += '.exe'
+        program += '.exe'  # add file extention on windows
 
-    # get path of the program
+    # get the path of the program
     example_dir = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(example_dir, program)
 
@@ -40,15 +36,15 @@ def main():
     worker = ipc.Worker(path, new_data)
 
     while True:                                    # repeat forever
-        number = 0                                 # here data is a number
+        number = 0                                 # in this case data is a number
         while worker.running:                      # run until the external program terminates
             print('Sending: {}'.format(number))    # print what will be sent
             worker.send(number)                    # send the data to the external program
             time.sleep(0.2)                        # small delay to see what is happening
-            print('Data: {}'.format(worker.data))  # sporadic printing of the latest value
+            print('Data: {}'.format(worker.data))  # printing the latest value
             number += 6                            # incrementing the value
         time.sleep(2)                              # delay to see that the program has ended
-        worker.run()                               # launch the external program again
+        worker.start()                             # launch the external program again
 
 if __name__ == '__main__':
     main()
