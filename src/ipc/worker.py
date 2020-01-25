@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 from threading import Thread, Event
 
 class Worker:
-    def __init__(self, command, callback=None):
+    def __init__(self, command, callback=None, start=True):
         if isinstance(command, str):
             command = shlex.split(command, posix=False)
         elif not isinstance(command, list):
@@ -26,7 +26,14 @@ class Worker:
         self.__data = None
         self.__process = None
         self.__running = Event()
-        self.run()
+        if start:
+            self.start()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.stop()
 
     @property
     def running(self):
@@ -47,13 +54,13 @@ class Worker:
             except Exception:
                 print('Error reading data!')
 
-    def __run(self):
+    def __start(self):
         print('Started worker')
         exit_code = self.__process.wait()
-        self.shutdown()
+        self.stop()
         print('Stopped worker [exit code: {}]'.format(exit_code))
 
-    def run(self):
+    def start(self):
         if not self.running:
             try:
                 self.__process = Popen(self.__cmd, stdin=PIPE, stdout=PIPE)
@@ -61,7 +68,7 @@ class Worker:
                 print('Error opening "{}": {}'.format(' '.join(self.__cmd), e.strerror))
                 return
             self.__running.set()
-            Thread(target=self.__run).start()
+            Thread(target=self.__start).start()
             Thread(target=self.__read).start()
 
     def send(self, data):
@@ -74,7 +81,7 @@ class Worker:
         else:
             print('Worker not running!')
 
-    def shutdown(self):
+    def stop(self):
         if self.running:
             self.__process.terminate()
         self.__running.clear()
