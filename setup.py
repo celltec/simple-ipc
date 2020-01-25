@@ -12,7 +12,7 @@ else:
 
 setup(
     name='simple-ipc',
-    version='1.0.2',
+    version='1.0.3',
     description='Inter-process communication interface based on stdio piping',
     long_description=long_description,
     long_description_content_type='text/markdown',
