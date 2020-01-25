@@ -8,7 +8,7 @@ if os.path.exists(readme):
     with open(readme, 'r') as fd:
         long_description = fd.read()
 else:
-    long_description = 'See readme'
+    long_description = 'See readme.md'
 
 setup(
     name='simple-ipc',

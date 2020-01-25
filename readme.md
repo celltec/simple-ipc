@@ -52,13 +52,15 @@ while worker.running:
     print(worker.data)
 ```
 
-
-
 ## Example program
 
-As part of the example a "program.c" file is included which can be compiled with ```gcc program.c -o program```, though a compiled executable for windows and linux are also included. It is a program that reads numbers from *stdin* and sends modified values back via *stdout*. As it only accepts numbers, it will not respond to data that contains letters or other symbols. A ```'\n'``` (newline) at the end of the data is needed to function properly. The numbers are exemplary reduced to a range of 1 to 42 and the program will close when the input is 42.
+#### Setup
+As part of the example a "program.c" file is included which can be compiled with ```gcc program.c -o program```, though a compiled executable for windows and linux is included. On linux one extra step is required to execute this example. You have to give "program" the right to be executed with `chmod +x program`. Of course you also have to change the command in the "example.py" to `'./program'`.  
 
-**Example code:**
+#### Explanation
+"program" reads numbers from *stdin* and sends modified values back via *stdout*. As it only accepts numbers, it will not respond to data that contains letters or other symbols. A ```'\n'``` (newline) at the end of the data is needed to function properly. The numbers are exemplary reduced to a range of 1 to 42 and the program will close when the input is 42.
+
+#### Example code
 ```python
 import ipc
 
@@ -72,12 +74,12 @@ while True:
     while worker.running:
         print('Sending: {}'.format(number))
         worker.send(number)
-        print('Data in main: {}'.format(worker.data))
+        print('Data: {}'.format(worker.data))
         number += 21
     worker.run()
 ```
 
-**Output:**
+#### Output
 ```
 Started worker
 Sending: 0

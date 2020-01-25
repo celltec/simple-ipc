@@ -3,7 +3,7 @@ import time
 import ipc
 
 def new_data(data):
-    print('Received (callback): {}'.format(data))
+    print('Received: {}'.format(data))
 
 def main():
     cmd = 'program.exe arg1 arg2 arg3'
@@ -14,7 +14,7 @@ def main():
             print('Sending: {}'.format(number))
             worker.send(number)
             time.sleep(0.5)
-            print('Data in main: {}'.format(worker.data))
+            print('Data: {}'.format(worker.data))
             number += 6
         worker.run()
 
