@@ -3,6 +3,7 @@
 #### Inter-process communication based on stdio
 
 ![Python Version](https://img.shields.io/pypi/pyversions/simple-ipc)
+![Downloads](https://pepy.tech/badge/simple-ipc)
 ![PyPI Version](https://img.shields.io/pypi/v/simple-ipc)
 ![License](https://img.shields.io/github/license/celltec/simple-ipc)
 
