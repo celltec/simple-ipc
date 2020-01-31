@@ -2,10 +2,10 @@
 
 #### Inter-process communication based on stdio
 
-![Python Version](https://img.shields.io/pypi/pyversions/simple-ipc)
-![Downloads](https://pepy.tech/badge/simple-ipc)
-![PyPI Version](https://img.shields.io/pypi/v/simple-ipc)
-![License](https://img.shields.io/github/license/celltec/simple-ipc)
+[![Python Version](https://img.shields.io/pypi/pyversions/simple-ipc)](https://www.python.org/downloads)
+[![Downloads](https://pepy.tech/badge/simple-ipc)](https://pypistats.org/packages/simple-ipc)
+[![PyPI Version](https://img.shields.io/pypi/v/simple-ipc)](https://pypi.org/project/simple-ipc)
+[![License](https://img.shields.io/github/license/celltec/simple-ipc)](https://en.wikipedia.org/wiki/MIT_License)
 
 A simple python interface for inter-process communication, a way to asynchronously 
 exchange data with external programs at runtime. The internal mechanism functions 
@@ -19,7 +19,7 @@ Import the module first:
 - `import ipc`
 - `from ipc import Worker`
 
-### The constructor
+### Parameters
 ```
 Worker(command, callback=None, start=True)
 ```
@@ -29,7 +29,7 @@ Worker(command, callback=None, start=True)
   - **str:** no support for spaces
 
 - `callback` *(optional)* a function that is called after new data has been received  
-  - must have exactly one argument
+  - must take exactly one argument
 
 - `start` *(optional)* determines if the worker should start when the object is created
 
@@ -66,10 +66,10 @@ All data will be converted to type `str` internally.
 from random import randint
 from ipc import Worker
 
-def new_data(data):
+def update(data):
     print(f'Received: {data}')
 
-worker = Worker('program.exe', new_data)
+worker = Worker('program.exe', update)
 
 while worker.running:
     number = randint(1, 10)
