@@ -19,9 +19,11 @@ import os
 import time
 import ipc
 
-# callback function: print the data immediately after receiving
-def new_data(data):
-    print('Received: {}'.format(data))
+
+# callback function
+def process(data):
+    if int(data) == 25:
+        print('Process data...')
 
 def main():
     program = 'program'
@@ -33,16 +35,14 @@ def main():
     path = os.path.join(example_dir, program)
 
     # create a worker object
-    worker = ipc.Worker(path, new_data)
+    worker = ipc.Worker(path, process, verbose=True)
 
     while True:                                    # repeat forever
         number = 0                                 # in this case data is a number
         while worker.running:                      # run until the external program terminates
-            print('Sending: {}'.format(number))    # print what will be sent
             worker.send(number)                    # send the data to the external program
             time.sleep(0.2)                        # small delay to see what is happening
-            print('Data: {}'.format(worker.data))  # printing the latest value
-            number += 6                            # incrementing the value
+            number += 6                            # increment the value
         time.sleep(2)                              # delay to see that the program has ended
         worker.start()                             # launch the external program again
 

@@ -5,7 +5,7 @@
 [![Python Version](https://img.shields.io/pypi/pyversions/simple-ipc)](https://www.python.org/downloads)
 [![Downloads](https://pepy.tech/badge/simple-ipc)](https://pypistats.org/packages/simple-ipc)
 [![PyPI Version](https://img.shields.io/pypi/v/simple-ipc)](https://pypi.org/project/simple-ipc)
-[![License](https://img.shields.io/github/license/celltec/simple-ipc)](https://en.wikipedia.org/wiki/MIT_License)
+[![License](https://img.shields.io/github/license/celltec/simple-ipc)](https://opensource.org/licenses/mit-license.php)
 
 A simple python interface for inter-process communication, a way to asynchronously 
 exchange data with external programs at runtime. The internal mechanism functions 
@@ -21,7 +21,7 @@ Import the module first:
 
 ### Parameters
 ```
-Worker(command, callback=None, start=True)
+Worker(command, callback=None, start=True, verbose=False)
 ```
 
 - `command` a path to an executable along with optional arguments  
@@ -31,7 +31,9 @@ Worker(command, callback=None, start=True)
 - `callback` *(optional)* a function that is called after new data has been received  
   - must take exactly one argument
 
-- `start` *(optional)* determines if the worker should start when the object is created
+- `start` *(optional)* start the worker automatically when created
+
+- `verbose` *(optional)* print status messages
 
 #### Examples
 ```python
@@ -39,7 +41,7 @@ worker = Worker(['with space.exe', 'spaced arg'], start=False)
 ```
 
 ```python
-with Worker('program.exe') as worker:
+with Worker('program.exe', verbose=True) as worker:
     ...
 ```
 
@@ -48,7 +50,8 @@ Worker('path/to/program.exe arg', lambda data: print(data))
 ```
 
 ### A worker object
-By default the worker starts automatically when created.
+
+All data will be converted to type `str` internally.
 
 #### Methods
 - `start()` starts the worker
@@ -59,21 +62,21 @@ By default the worker starts automatically when created.
 - `running` indicates the status of the worker *(read-only)*
 - `data` contains the most recent value *(read-only)*
 
-All data will be converted to type `str` internally.
-
 ## Example program
 ```python
 from random import randint
 from ipc import Worker
 
-def update(data):
-    print(f'Received: {data}')
+def process(data):
+    if int(data) == 5:
+        print('Process data...')
 
-worker = Worker('program.exe', update)
+worker = Worker('program.exe', process)
 
 while worker.running:
     number = randint(1, 10)
-    print(f'Sending: {number}')
     worker.send(number)
     print(f'Data: {worker.data}')
 ```
+
+More example code can be found [here](https://github.com/celltec/simple-ipc/tree/master/example).

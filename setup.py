@@ -12,8 +12,8 @@ else:
 
 setup(
     name='simple-ipc',
-    version='1.1.0',
-    description='Inter-process communication interface based on stdio piping',
+    version='1.2.0',
+    description='Inter-process communication based on stdio',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/celltec/simple-ipc',
