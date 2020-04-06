@@ -12,14 +12,14 @@ else:
 
 setup(
     name='simple-ipc',
-    version='1.2.0',
+    version='1.2.1',
     description='Inter-process communication based on stdio',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/celltec/simple-ipc',
     project_urls={'Source': 'https://github.com/celltec/simple-ipc/tree/master/src/ipc/worker.py'},
     author='Jeremy Peters',
-    author_email='info.peters@quantentunnel.de',
+    author_email='contact@celltec.dev',
     keywords='ipc stdio stdin stdout send process program communicate interact transmit transfer communication interaction transmission simple',
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
