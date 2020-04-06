@@ -2,10 +2,9 @@
 
 #### Inter-process communication based on stdio
 
-[![Python Version](https://img.shields.io/pypi/pyversions/simple-ipc)](https://www.python.org/downloads)
-[![Downloads](https://pepy.tech/badge/simple-ipc)](https://pypistats.org/packages/simple-ipc)
-[![PyPI Version](https://img.shields.io/pypi/v/simple-ipc)](https://pypi.org/project/simple-ipc)
-[![License](https://img.shields.io/github/license/celltec/simple-ipc)](https://opensource.org/licenses/mit-license.php)
+[![Python Version](https://badgen.net/badge/python/2.7%20%7C%203/)](https://www.python.org/downloads)
+[![PyPI Version](https://badgen.net/pypi/v/simple-ipc/)](https://pypi.org/project/simple-ipc)
+[![License](https://badgen.net/badge/license/MIT/)](https://opensource.org/licenses/mit-license.php)
 
 A simple python interface for inter-process communication, a way to asynchronously 
 exchange data with external programs at runtime. The internal mechanism functions 
@@ -79,4 +78,4 @@ while worker.running:
     print(f'Data: {worker.data}')
 ```
 
-More example code can be found [here](https://github.com/celltec/simple-ipc/tree/master/example).
+More example code can be found [here](https://github.com/celltec/simple-ipc/tree/master/example/example.py).
