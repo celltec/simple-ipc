@@ -19,7 +19,6 @@ import os
 import time
 import ipc
 
-
 # callback function
 def process(data):
     if int(data) == 25:
@@ -37,14 +36,14 @@ def main():
     # create a worker object
     worker = ipc.Worker(path, process, verbose=True)
 
-    while True:                                    # repeat forever
-        number = 0                                 # in this case data is a number
-        while worker.running:                      # run until the external program terminates
-            worker.send(number)                    # send the data to the external program
-            time.sleep(0.2)                        # small delay to see what is happening
-            number += 6                            # increment the value
-        time.sleep(2)                              # delay to see that the program has ended
-        worker.start()                             # launch the external program again
+    while True:                  # repeat forever
+        number = 0               # in this case data is a number
+        while worker.running:    # run until the external program terminates
+            worker.send(number)  # send the data to the external program
+            time.sleep(0.2)      # small delay to see what is happening
+            number += 6          # increment the value
+        time.sleep(2)            # delay to see that the program has ended
+        worker.start()           # launch the external program again
 
 if __name__ == '__main__':
     main()
